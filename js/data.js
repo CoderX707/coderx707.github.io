@@ -3,27 +3,27 @@
 // CodeSandbox Projects
 const sandboxProjects = [
 	{
-		src: 'https://codesandbox.io/embed/todo-app-sdhkqz?fontsize=14&hidenavigation=1&theme=dark',
+		src: 'https://codesandbox.io/embed/todo-app-sdhkqz?fontsize=14&hidenavigation=1',
 		title: 'Todo App'
 	},
 	{
-		src: 'https://codesandbox.io/embed/snake-game-bxpe7m?fontsize=14&hidenavigation=1&theme=dark&view=preview',
+		src: 'https://codesandbox.io/embed/snake-game-bxpe7m?fontsize=14&hidenavigation=1&view=preview',
 		title: 'Snake game'
 	},
 	{
-		src: 'https://codesandbox.io/embed/quiz-game-m8u0qk?fontsize=14&hidenavigation=1&theme=dark',
+		src: 'https://codesandbox.io/embed/quiz-game-m8u0qk?fontsize=14&hidenavigation=1',
 		title: 'Quiz game'
 	},
 	{
-		src: 'https://codesandbox.io/embed/react-youtube-clone-app-1lru6m?fontsize=14&hidenavigation=1&theme=dark&view=editor',
+		src: 'https://codesandbox.io/embed/react-youtube-clone-app-1lru6m?fontsize=14&hidenavigation=1&view=editor',
 		title: 'React Youtube Clone App'
 	},
 	{
-		src: 'https://codesandbox.io/embed/react-quiz-app-rngy7f?fontsize=14&hidenavigation=1&theme=dark&view=preview',
+		src: 'https://codesandbox.io/embed/react-quiz-app-rngy7f?fontsize=14&hidenavigation=1&view=preview',
 		title: 'React Quiz game'
 	},
 	{
-		src: 'https://codesandbox.io/embed/tender-bash-50uyx4?fontsize=14&hidenavigation=1&theme=dark',
+		src: 'https://codesandbox.io/embed/tender-bash-50uyx4?fontsize=14&hidenavigation=1',
 		title: 'React Weather App'
 	}
 ];
