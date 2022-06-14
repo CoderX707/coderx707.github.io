@@ -19,6 +19,7 @@ createApp({
     $('.navbar').headroom();
     // SMOOTHSCROLL
     $(function () {
+      typingAnimation(this.isDarkMode)
       $('.nav-link, .custom-btn-link').on('click', function (event) {
         var $anchor = $(this);
         $('html, body')
@@ -49,6 +50,7 @@ createApp({
   methods: {
     toggleTheme() {
       this.isDarkMode = !this.isDarkMode;
+      typingAnimation(this.isDarkMode)
       this.iFrameSrcChangeAsPerTheme();
       $('.color-mode-icon').toggleClass('active');
       $('body').toggleClass('dark-mode');
