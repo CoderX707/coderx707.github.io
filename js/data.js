@@ -36,15 +36,23 @@ const menuList = ['About', 'Project', 'Resume', 'Contact'];
 const openSourceProjects = [
 	{
 		link: 'https://coderx707.github.io/tools-utilities/',
-		img: 'images/project/tools-utils01.png'
+		img: 'images/project/tools-utils01.png',
+		project_title: 'Tools & Utilities'
 	},
 	{
 		link: 'https://mockx-api.herokuapp.com/',
-		img: 'images/project/mock-api.png'
+		img: 'images/project/mock-api.png',
+		project_title: 'Mock API'
 	},
 	{
 		link: 'https://coderx707.github.io/tools-utilities/',
-		img: 'images/project/tools-utils.png'
+		img: 'images/project/tools-utils.png',
+		project_title: 'Tools & Utilities'
+	},
+	{
+		link: 'https://coderx707.github.io/Type-Writer-Library/',
+		img: 'images/project/typing.png',
+		project_title: 'Type Writer Library'
 	}
 ];
 
