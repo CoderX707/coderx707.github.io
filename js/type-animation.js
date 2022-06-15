@@ -23,7 +23,7 @@ function typingAnimation(isDarkMode = false) {
     .pauseFor(500)
     .typeString('\n\n🟣 Front-End Development')
     .pauseFor(200)
-    .typeString('\n\tNext.js,React.js, Vue.js, HTML, CSS, JavaScript and Typescript')
+    .typeString('\n\tNext.js, React.js, Vue.js, HTML, CSS, JavaScript and Typescript')
     .pauseFor(200)
     .typeString('\n\n🟣 Back-End Development')
     .pauseFor(200)
