@@ -93,14 +93,13 @@ const AppWindow: React.FC<AppWindowProps> = ({
 
   return (
     <div
-      className="fixed rounded shadow-lg backdrop-blur-md bg-black/10 block"
+      className="fixed rounded shadow-lg backdrop-blur-md bg-black/10 block z-0"
       style={{
         width: `${windowSize.width}px`,
         height: `${windowSize.height}px`,
         transform: isMaximized
           ? undefined
           : `translate(${position.x}px, ${position.y}px)`,
-        zIndex: 1000,
         overflow: isMinimized ? "hidden" : "auto",
       }}
     >
@@ -136,7 +135,6 @@ const AppWindow: React.FC<AppWindowProps> = ({
       {/* App Content */}
       {!isMinimized && (
         <div
-          className="p-4"
           style={{ maxHeight: "calc(100% - 40px)", overflowY: "auto" }}
         >
           {children}

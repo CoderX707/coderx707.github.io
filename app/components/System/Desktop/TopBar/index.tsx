@@ -109,7 +109,7 @@ const TopBar: React.FC = () => {
   };
 
   return (
-    <div className="w-full backdrop-blur-md text-black font-bold py-1 px-4 flex justify-between items-center fixed top-0">
+    <div className="w-full backdrop-blur-md text-black font-bold py-1 px-4 flex justify-between items-center fixed top-0 z-10">
       <BackDrop />
       <div className="flex items-center text-sm gap-x-2">
         <Image src={AppleLogo50} alt="Apple Logo" className="h-5 w-5" />

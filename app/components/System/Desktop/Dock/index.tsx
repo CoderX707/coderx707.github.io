@@ -5,7 +5,7 @@ import { GlobalContext } from "@/app/contexts/GlobalContext";
 const Dock: React.FC = () => {
   const context = useContext(GlobalContext);
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 backdrop-blur-sm rounded-xl shadow-lg p-4 flex space-x-4">
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 backdrop-blur-sm rounded-xl shadow-lg p-4 flex space-x-4 z-10">
       <BackDrop radius="rounded-xl" />
       {context?.apps?.map((app) => (
         <button

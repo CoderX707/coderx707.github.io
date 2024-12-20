@@ -1,7 +1,5 @@
-import React from 'react'
+import { WorkingOn } from '../../System/Global'
 
 export default function Music() {
-  return (
-    <div>Music</div>
-  )
+  return <WorkingOn />
 }

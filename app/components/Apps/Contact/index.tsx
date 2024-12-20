@@ -1,7 +1,5 @@
-import React from 'react'
+import { WorkingOn } from '../../System/Global';
 
 export default function Contact() {
-  return (
-    <div>Contact</div>
-  )
+   return <WorkingOn />;
 }

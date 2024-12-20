@@ -1,7 +1,5 @@
-import React from 'react'
+import { WorkingOn } from '../../System/Global';
 
 export default function Terminal() {
-  return (
-    <div>Terminal</div>
-  )
+   return <WorkingOn />;
 }
