@@ -7,6 +7,7 @@ import BatteryIcon from "@/public/icons/battery.png";
 import BatteryChargeIcon from "@/public/icons/battery-charge.png";
 import WifiIcon from "@/public/icons/wifi.png";
 import FullScreenIcon from "@/public/icons/full-screen.png";
+import screenfull from "screenfull";
 
 const TopBar: React.FC = () => {
   const context = useContext(GlobalContext);
@@ -15,7 +16,7 @@ const TopBar: React.FC = () => {
     null
   );
   const [isCharging, setIsCharging] = useState<boolean>(false);
-  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+  const [isOnline, setIsOnline] = useState<boolean>(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -40,7 +41,8 @@ const TopBar: React.FC = () => {
 
   const getBatteryStatus = async () => {
     try {
-      const battery = await (navigator as unknown as any).getBattery();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const battery = await (navigator as unknown as any)?.getBattery();
       if (battery) {
         setBatteryPercentage(Math.round(battery.level * 100));
         setIsCharging(battery.charging);
@@ -69,44 +71,11 @@ const TopBar: React.FC = () => {
   };
 
   const toggleFullscreen = () => {
-    if (
-      !document.fullscreenElement &&
-      !(document as unknown as any).mozFullScreenElement &&
-      !(document as unknown as any).webkitFullscreenElement &&
-      !(document as unknown as any).msFullscreenElement
-    ) {
-      // Enter fullscreen
-      if ((document.documentElement as unknown as any).requestFullscreen) {
-        (document.documentElement as unknown as any).requestFullscreen();
-      } else if (
-        (document.documentElement as unknown as any).mozRequestFullScreen
-      ) {
-        // Firefox
-        (document.documentElement as unknown as any).mozRequestFullScreen();
-      } else if (
-        (document.documentElement as unknown as any).webkitRequestFullscreen
-      ) {
-        // Chrome, Safari, and Opera
-        (document.documentElement as unknown as any).webkitRequestFullscreen();
-      } else if (
-        (document.documentElement as unknown as any).msRequestFullscreen
-      ) {
-        // IE/Edge
-        (document.documentElement as unknown as any).msRequestFullscreen();
-      }
-    } else {
-      // Exit fullscreen
-      if ((document as unknown as any).exitFullscreen) {
-        (document as unknown as any).exitFullscreen();
-      } else if ((document as unknown as any).mozCancelFullScreen) {
-        // Firefox
-        (document as unknown as any).mozCancelFullScreen();
-      } else if ((document as unknown as any).webkitExitFullscreen) {
-        // Chrome, Safari, and Opera
-        (document as unknown as any).webkitExitFullscreen();
-      } else if ((document as unknown as any).msExitFullscreen) {
-        // IE/Edge
-        (document as unknown as any).msExitFullscreen();
+    if (screenfull.isEnabled) {
+      if (screenfull.isFullscreen) {
+        screenfull.exit();
+      } else {
+        screenfull.request();
       }
     }
   };
