@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { BackDrop } from "../../Global";
 import { GlobalContext } from "@/app/contexts/GlobalContext";
+import Image from "next/image";
 
 const Dock: React.FC = () => {
   const context = useContext(GlobalContext);
@@ -13,7 +14,7 @@ const Dock: React.FC = () => {
           onClick={() => context.openApp(app.name)}
           className="w-12 h-12 flex items-center justify-center rounded-md hover:bg-gray-700"
         >
-          <img src={app.icon} alt={`${app.name} icon`} className="w-12 h-12" />
+          <Image src={app.icon} alt={`${app.name} icon`} className="w-12 h-12" />
         </button>
       ))}
     </div>

@@ -30,7 +30,7 @@ const HomeScreen: React.FC = () => {
 
   if (!context) return null;
 
-  const { activApps, closeApp } = context;
+  const { activeApps, closeApp } = context;
   return (
     <div
       className="h-screen text-white relative bg-cover bg-center bg-no-repeat"
@@ -41,7 +41,7 @@ const HomeScreen: React.FC = () => {
       <TopBar />
       {/* Open Apps */}
       <AnimatePresence>
-        {activApps?.map((appName) => {
+        {activeApps?.map((appName) => {
           const AppComponent = appComponents[appName];
           if (!AppComponent) return null;
           return (

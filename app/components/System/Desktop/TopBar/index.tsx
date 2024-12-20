@@ -16,7 +16,6 @@ const TopBar: React.FC = () => {
   );
   const [isCharging, setIsCharging] = useState<boolean>(false);
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -41,7 +40,7 @@ const TopBar: React.FC = () => {
 
   const getBatteryStatus = async () => {
     try {
-      const battery = await navigator?.getBattery();
+      const battery = await (navigator as unknown as any).getBattery();
       if (battery) {
         setBatteryPercentage(Math.round(battery.level * 100));
         setIsCharging(battery.charging);
@@ -72,39 +71,43 @@ const TopBar: React.FC = () => {
   const toggleFullscreen = () => {
     if (
       !document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
+      !(document as unknown as any).mozFullScreenElement &&
+      !(document as unknown as any).webkitFullscreenElement &&
+      !(document as unknown as any).msFullscreenElement
     ) {
       // Enter fullscreen
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      } else if (document.documentElement?.mozRequestFullScreen) {
+      if ((document.documentElement as unknown as any).requestFullscreen) {
+        (document.documentElement as unknown as any).requestFullscreen();
+      } else if (
+        (document.documentElement as unknown as any).mozRequestFullScreen
+      ) {
         // Firefox
-        document.documentElement?.mozRequestFullScreen();
-      } else if (document.documentElement?.webkitRequestFullscreen) {
+        (document.documentElement as unknown as any).mozRequestFullScreen();
+      } else if (
+        (document.documentElement as unknown as any).webkitRequestFullscreen
+      ) {
         // Chrome, Safari, and Opera
-        document.documentElement?.webkitRequestFullscreen();
-      } else if (document.documentElement?.msRequestFullscreen) {
+        (document.documentElement as unknown as any).webkitRequestFullscreen();
+      } else if (
+        (document.documentElement as unknown as any).msRequestFullscreen
+      ) {
         // IE/Edge
-        document.documentElement?.msRequestFullscreen();
+        (document.documentElement as unknown as any).msRequestFullscreen();
       }
-      setIsFullscreen(true);
     } else {
       // Exit fullscreen
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document?.mozCancelFullScreen) {
+      if ((document as unknown as any).exitFullscreen) {
+        (document as unknown as any).exitFullscreen();
+      } else if ((document as unknown as any).mozCancelFullScreen) {
         // Firefox
-        document?.mozCancelFullScreen();
-      } else if (document?.webkitExitFullscreen) {
+        (document as unknown as any).mozCancelFullScreen();
+      } else if ((document as unknown as any).webkitExitFullscreen) {
         // Chrome, Safari, and Opera
-        document.webkitExitFullscreen();
-      } else if (document?.msExitFullscreen) {
+        (document as unknown as any).webkitExitFullscreen();
+      } else if ((document as unknown as any).msExitFullscreen) {
         // IE/Edge
-        document?.msExitFullscreen();
+        (document as unknown as any).msExitFullscreen();
       }
-      setIsFullscreen(false);
     }
   };
 
@@ -114,7 +117,7 @@ const TopBar: React.FC = () => {
       <div className="flex items-center text-sm gap-x-2">
         <Image src={AppleLogo50} alt="Apple Logo" className="h-5 w-5" />
         <div className="flex items-center">
-          {context?.activApps?.map((app) => (
+          {context?.activeApps?.map((app) => (
             <span
               key={app}
               className="mx-2 cursor-pointer"

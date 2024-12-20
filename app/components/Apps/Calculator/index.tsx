@@ -3,7 +3,7 @@ import { useState } from "react";
 const Calculator = () => {
   const [display, setDisplay] = useState("");
   
-  const handleClick = (value:any) => {
+  const handleClick = (value:string) => {
     if (value === "=") {
       try {
         setDisplay(eval(display).toString()); // Simple evaluation logic

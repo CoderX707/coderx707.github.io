@@ -1,4 +1,7 @@
-import { HomeScreen, LoginScreen } from "./components/Screens";
+import {
+  HomeScreen,
+  // LoginScreen
+} from "./components/Screens";
 
 export default function Home() {
   return (

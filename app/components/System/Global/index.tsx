@@ -1,12 +1,16 @@
 import Image from "next/image";
 import WorkingIcon from "@/public/icons/working.png";
 interface BackDropInterface {
-  color: "black" | "white";
-  blur: "sm" | "md" | "xl";
-  radius: string;
+  color?: "black" | "white";
+  blur?: "sm" | "md" | "xl";
+  radius?: string;
 }
 
-export const BackDrop = ({ color = "black", blur = "sm", radius = "" }) => {
+export const BackDrop = ({
+  color = "black",
+  blur = "sm",
+  radius = "",
+}: BackDropInterface) => {
   return (
     <div
       className={`absolute inset-0 backdrop-blur-${blur} bg-${color}/30 ${radius}`}

@@ -10,6 +10,7 @@ import CalenderIcon from "@/public/icons/calender.png";
 import ContactsIcon from "@/public/icons/contacts.png";
 import SafariIcon from "@/public/icons/safari.png";
 import MusicIcon from "@/public/icons/music.png";
+import { StaticImageData } from "next/image";
 
 // Define the shape of the context
 interface GlobalContextType {
@@ -18,25 +19,25 @@ interface GlobalContextType {
   theme: string;
   apps: AppInterface[];
   toggleTheme: () => void;
-  activApps: string[];
+  activeApps: string[];
   openApp: (appName: string) => void;
   closeApp: (appName: string) => void;
 }
 
 interface AppInterface {
   name: string;
-  icon: string;
+  icon: StaticImageData;
 }
 
 const apps = [
-  { name: "Terminal", icon: TerminalIcon.src },
-  { name: "Calculator", icon: calculatorIcon.src },
-  { name: "Calender", icon: CalenderIcon.src },
-  { name: "Settings", icon: SettingsIcon.src },
-  { name: "Photos", icon: PhotosIcon.src },
-  { name: "Safari", icon: SafariIcon.src },
-  { name: "Contact", icon: ContactsIcon.src },
-  { name: "Music", icon: MusicIcon.src },
+  { name: "Terminal", icon: TerminalIcon },
+  { name: "Calculator", icon: calculatorIcon },
+  { name: "Calender", icon: CalenderIcon },
+  { name: "Settings", icon: SettingsIcon },
+  { name: "Photos", icon: PhotosIcon },
+  { name: "Safari", icon: SafariIcon },
+  { name: "Contact", icon: ContactsIcon },
+  { name: "Music", icon: MusicIcon },
 ];
 
 // Create a Context with default values
@@ -47,7 +48,7 @@ const initialState = {
   loginPageWallpaper: wallpaper1.src,
   theme: "light",
   apps: apps,
-  activApps: [], // Always an array
+  activeApps: [""],
 };
 
 // ThemeProvider component that wraps the entire app to provide the context
@@ -62,16 +63,16 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const openApp = (appName: string) => {
-    setGlobalState((prevState: any) => ({
+    setGlobalState((prevState) => ({
       ...prevState,
-      activApps: [...new Set([...prevState.activApps, appName])],
+      activeApps: [...new Set([...prevState.activeApps, appName])],
     }));
   };
 
   const closeApp = (appName: string) => {
     setGlobalState((prevState) => ({
       ...prevState,
-      activApps: prevState.activApps.filter((app) => app !== appName),
+      activeApps: prevState.activeApps.filter((app) => app !== appName),
     }));
   };
 

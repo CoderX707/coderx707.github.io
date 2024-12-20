@@ -2,6 +2,7 @@
 import { GlobalContext } from "@/app/contexts/GlobalContext";
 import { useContext, useState } from "react";
 import { BackDrop } from "../System/Global";
+import Image from "next/image";
 
 const LoginScreen: React.FC = () => {
   const context = useContext(GlobalContext);
@@ -25,7 +26,7 @@ const LoginScreen: React.FC = () => {
       <BackDrop />
       {/* Profile Section */}
       <div className="text-center">
-        <img
+        <Image
           src="/profile.png"
           alt="Profile"
           className="w-24 h-24 rounded-full border-2 border-white mb-4"
