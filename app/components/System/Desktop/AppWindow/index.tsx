@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BackDrop } from "../../Global";
 
 interface AppWindowProps {
   isOpen: boolean;
@@ -92,7 +93,7 @@ const AppWindow: React.FC<AppWindowProps> = ({
 
   return (
     <div
-      className="fixed rounded shadow-lg bg-gray-800 block"
+      className="fixed rounded shadow-lg backdrop-blur-md bg-black/10 block"
       style={{
         width: `${windowSize.width}px`,
         height: `${windowSize.height}px`,
@@ -103,11 +104,15 @@ const AppWindow: React.FC<AppWindowProps> = ({
         overflow: isMinimized ? "hidden" : "auto",
       }}
     >
+      <BackDrop />
+
       {/* Title Bar */}
       <div
-        className="flex justify-between items-center bg-gray-700  px-4 py-2 cursor-move"
+        className="flex justify-between items-center backdrop-blur-md px-4 py-2 cursor-move"
         onMouseDown={handleMouseDown}
       >
+      <BackDrop />
+
         <span>{title}</span>
         <div className="flex space-x-2">
           <button

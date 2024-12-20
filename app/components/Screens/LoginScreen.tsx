@@ -1,24 +1,28 @@
-"use client"
-import { useState } from "react";
+"use client";
+import { GlobalContext } from "@/app/contexts/GlobalContext";
+import { useContext, useState } from "react";
+import { BackDrop } from "../System/Global";
 
-interface LoginScreenProps {
-  onLogin: () => void;
-}
-
-const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
+const LoginScreen: React.FC = () => {
+  const context = useContext(GlobalContext);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = () => {
     if (password === "Admin@123") {
-      onLogin();
     } else {
       setError("Incorrect password");
     }
   };
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-gray-700 to-gray-900 flex flex-col justify-center items-center text-white">
+    <div
+      className="h-screen w-screen backdrop-blur-sm bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center text-white"
+      style={{
+        backgroundImage: `url(${context?.loginPageWallpaper})`,
+      }}
+    >
+      <BackDrop />
       {/* Profile Section */}
       <div className="text-center">
         <img

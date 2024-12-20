@@ -1,22 +1,19 @@
-interface DockProps {
-  openApp: (appName: string) => void;
-}
+import { useContext } from "react";
+import { BackDrop } from "../../Global";
+import { GlobalContext } from "@/app/contexts/GlobalContext";
 
-const Dock: React.FC<DockProps> = ({ openApp }) => {
-  const apps = [
-    { name: "Calculator", icon: "/calculator-icon.png" },
-    { name: "Remuneration", icon: "/remuneration-icon.png" },
-  ];
-
+const Dock: React.FC = () => {
+  const context = useContext(GlobalContext);
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 bg-opacity-80 rounded-xl shadow-lg p-4 flex space-x-4">
-      {apps.map((app) => (
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 backdrop-blur-sm rounded-xl shadow-lg p-4 flex space-x-4">
+      <BackDrop radius="rounded-xl" />
+      {context?.apps?.map((app) => (
         <button
           key={app.name}
-          onClick={() => openApp(app.name)}
+          onClick={() => context.openApp(app.name)}
           className="w-12 h-12 flex items-center justify-center rounded-md hover:bg-gray-700"
         >
-          <img src={app.icon} alt={`${app.name} icon`} className="w-8 h-8" />
+          <img src={app.icon} alt={`${app.name} icon`} className="w-12 h-12" />
         </button>
       ))}
     </div>
