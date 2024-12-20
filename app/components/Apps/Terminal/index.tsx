@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const Terminal: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const [output, setOutput] = useState<string[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [variables, setVariables] = useState<Map<string, any>>(new Map()); // Store variables
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +73,7 @@ const Terminal: React.FC = () => {
   };
 
   return (
-    <div className="bg-black text-green-500 p-1 font-mono min-h-[260px] overflow-y-auto">
+    <div className="text-green-400 p-1 font-mono min-h-[260px] overflow-y-auto">
       <div className="mb-0">
         {output.map((line, index) => (
           <div key={index}>{line}</div>
@@ -83,7 +84,7 @@ const Terminal: React.FC = () => {
           type="text"
           value={input}
           onChange={handleInputChange}
-          className="bg-black text-green-500 border-none outline-none w-full p-1 font-mono"
+          className="bg-transparent text-green-400 bg-black/20 border-none outline-none w-full p-1 font-mono"
           autoFocus
         />
       </form>
