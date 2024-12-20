@@ -7,6 +7,7 @@ const userName = "CoderX707";
 axios.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
+    Authorization: "Bearer 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",
   };
   return config;
 });
