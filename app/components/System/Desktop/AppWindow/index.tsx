@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, ReactElement } from "react";
 import { BackDrop } from "../../Global";
-import { WindowSizeProps } from "@/app/Components/types";
+import { WindowSizeProps } from "@/app/components/types";
 
 interface AppWindowProps {
   isOpen: boolean;

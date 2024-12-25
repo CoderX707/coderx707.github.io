@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCache, setCache } from "@/app/utils/cache";
-import { GitData } from "../Components/types";
+import { GitData } from "../components/types";
 
 const githubAPIUrl = "https://api.github.com/users";
 const userName = "CoderX707";

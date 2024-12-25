@@ -1,7 +1,7 @@
 import {
   HomeScreen,
   // LoginScreen
-} from "./Components/Screens";
+} from "./components/Screens";
 
 export default function Home() {
   return (

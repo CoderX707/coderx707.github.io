@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { AnimatePresence } from "framer-motion";
-import { TopBar, AppWindow, Dock } from "@/app/Components/System/Desktop";
+import { TopBar, AppWindow, Dock } from "@/app/components/System/Desktop";
 import {
   Calculator,
   Calender,
