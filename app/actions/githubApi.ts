@@ -4,12 +4,12 @@ import { GitData } from "../Components/types";
 
 const githubAPIUrl = "https://api.github.com/users";
 const userName = "CoderX707";
-const token = "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";
+// const token = "";
 
 axios.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    Authorization: `Bearer ${token}`,
+    // Authorization: `Bearer ${token}`,
   };
   return config;
 });
