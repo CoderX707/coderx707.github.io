@@ -19,3 +19,76 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Base grid system */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); /* 12 columns layout */
+  gap: 0.5rem; /* Gap between grid items */
+}
+
+/* For Mobile */
+.col-span-mobile-12 {
+  grid-column: span 12 / span 12;
+}
+.col-span-mobile-6 {
+  grid-column: span 6 / span 6;
+}
+.col-span-mobile-4 {
+  grid-column: span 4 / span 4;
+}
+.col-span-mobile-3 {
+  grid-column: span 3 / span 3;
+}
+.col-span-mobile-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-mobile-1 {
+  grid-column: span 1 / span 1;
+}
+
+/* For Tablet */
+.col-span-tablet-12 {
+  grid-column: span 12 / span 12;
+}
+.col-span-tablet-8 {
+  grid-column: span 8 / span 8;
+}
+.col-span-tablet-6 {
+  grid-column: span 6 / span 6;
+}
+.col-span-tablet-4 {
+  grid-column: span 4 / span 4;
+}
+.col-span-tablet-3 {
+  grid-column: span 3 / span 3;
+}
+.col-span-tablet-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-tablet-1 {
+  grid-column: span 1 / span 1;
+}
+
+/* For Desktop */
+.col-span-desktop-12 {
+  grid-column: span 12 / span 12;
+}
+.col-span-desktop-8 {
+  grid-column: span 8 / span 8;
+}
+.col-span-desktop-6 {
+  grid-column: span 6 / span 6;
+}
+.col-span-desktop-4 {
+  grid-column: span 4 / span 4;
+}
+.col-span-desktop-3 {
+  grid-column: span 3 / span 3;
+}
+.col-span-desktop-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-desktop-1 {
+  grid-column: span 1 / span 1;
+}

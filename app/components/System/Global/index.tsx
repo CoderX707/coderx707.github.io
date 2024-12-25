@@ -23,7 +23,7 @@ export const BackDrop = ({
 
 export const WorkingOn = () => {
   return (
-    <div className="relative w-full h-[260px]">
+    <div className="relative w-full h-[268px]">
       <Image
         src={WorkingIcon}
         width={400}
