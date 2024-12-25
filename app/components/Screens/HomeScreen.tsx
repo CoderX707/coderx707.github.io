@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { AnimatePresence } from "framer-motion";
-import { TopBar, AppWindow, Dock } from "@/app/components/System/Desktop";
+import { TopBar, AppWindow, Dock } from "@/app/Components/System/Desktop";
 import {
   Calculator,
   Calender,
@@ -13,8 +13,9 @@ import {
   Contact,
 } from "../Apps";
 import { GlobalContext } from "@/app/contexts/GlobalContext";
+import { WindowSizeProps } from "../types";
 
-const appComponents: { [key: string]: React.FC } = {
+const appComponents: { [key: string]: React.FC<WindowSizeProps> } = {
   Calculator,
   Calender,
   Safari,
@@ -51,7 +52,7 @@ const HomeScreen: React.FC = () => {
               onClose={() => closeApp(appName)}
               title={appName}
             >
-              <AppComponent />
+              <AppComponent windowSize={{ width: 400, height: 300 }} />
             </AppWindow>
           );
         })}
