@@ -31,6 +31,18 @@ body {
 .col-span-mobile-12 {
   grid-column: span 12 / span 12;
 }
+.col-span-mobile-10 {
+  grid-column: span 10 / span 10;
+}
+.col-span-mobile-9 {
+  grid-column: span 9 / span 9;
+}
+.col-span-mobile-8 {
+  grid-column: span 8 / span 8;
+}
+.col-span-mobile-7 {
+  grid-column: span 7 / span 7;
+}
 .col-span-mobile-6 {
   grid-column: span 6 / span 6;
 }
@@ -50,6 +62,12 @@ body {
 /* For Tablet */
 .col-span-tablet-12 {
   grid-column: span 12 / span 12;
+}
+.col-span-tablet-10 {
+  grid-column: span 10 / span 10;
+}
+.col-span-tablet-9 {
+  grid-column: span 9 / span 9;
 }
 .col-span-tablet-8 {
   grid-column: span 8 / span 8;
@@ -73,6 +91,12 @@ body {
 /* For Desktop */
 .col-span-desktop-12 {
   grid-column: span 12 / span 12;
+}
+.col-span-desktop-10 {
+  grid-column: span 10 / span 10;
+}
+.col-span-desktop-9 {
+  grid-column: span 9 / span 9;
 }
 .col-span-desktop-8 {
   grid-column: span 8 / span 8;

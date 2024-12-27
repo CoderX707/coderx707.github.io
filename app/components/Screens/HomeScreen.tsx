@@ -36,7 +36,7 @@ const HomeScreen: React.FC = () => {
     <div
       className="h-screen text-white relative bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url(${context?.homePageWallpaper})`,
+        backgroundImage: `url(${context?.homePageActiveWallpaper})`,
       }}
     >
       <TopBar />

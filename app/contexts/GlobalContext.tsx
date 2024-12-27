@@ -1,7 +1,14 @@
 "use client";
-import React, { createContext, useState, ReactNode } from "react";
-import wallpaper4 from "@/public/wallpapers/wallpaper4.jpg";
-import wallpaper1 from "@/public/wallpapers/wallpaper1.jpg";
+import React, { createContext, useState, ReactNode, useMemo } from "react";
+// Wallpapers
+import wallpaper0 from "@/public/wallpapers/wallpaper0.webp";
+import wallpaper1 from "@/public/wallpapers/wallpaper1.webp";
+import wallpaper2 from "@/public/wallpapers/wallpaper2.webp";
+import wallpaper3 from "@/public/wallpapers/wallpaper3.webp";
+import wallpaper4 from "@/public/wallpapers/wallpaper4.webp";
+import wallpaper5 from "@/public/wallpapers/wallpaper5.webp";
+
+// Icons
 import calculatorIcon from "@/public/icons/calculator.png";
 import TerminalIcon from "@/public/icons/terminal.png";
 import PhotosIcon from "@/public/icons/photos.png";
@@ -14,14 +21,17 @@ import { StaticImageData } from "next/image";
 
 // Define the shape of the context
 interface GlobalContextType {
-  homePageWallpaper: string;
-  loginPageWallpaper: string;
+  homePageActiveWallpaper: string;
+  loginPageActiveWallpaper: string;
   theme: string;
   apps: AppInterface[];
   toggleTheme: () => void;
   activeApps: string[];
   openApp: (appName: string) => void;
   closeApp: (appName: string) => void;
+  changeHomeWallpaper: (wallpaper: string) => void;
+  changeLoginWallpaper: (wallpaper: string) => void;
+  availableWallpapers: StaticImageData[];
 }
 
 interface AppInterface {
@@ -43,12 +53,27 @@ const apps = [
 // Create a Context with default values
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
-const initialState = {
-  homePageWallpaper: wallpaper4.src,
-  loginPageWallpaper: wallpaper1.src,
+const initialState: Omit<
+  GlobalContextType,
+  | "toggleTheme"
+  | "openApp"
+  | "closeApp"
+  | "changeHomeWallpaper"
+  | "changeLoginWallpaper"
+> = {
+  homePageActiveWallpaper: wallpaper4.src,
+  loginPageActiveWallpaper: wallpaper1.src,
   theme: "light",
   apps: apps,
-  activeApps: [""],
+  activeApps: [],
+  availableWallpapers: [
+    wallpaper0,
+    wallpaper1,
+    wallpaper2,
+    wallpaper3,
+    wallpaper4,
+    wallpaper5,
+  ],
 };
 
 // ThemeProvider component that wraps the entire app to provide the context
@@ -59,6 +84,20 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGlobalState((prevState) => ({
       ...prevState,
       theme: prevState.theme === "light" ? "dark" : "light",
+    }));
+  };
+
+  const changeHomeWallpaper = (wallpaper: string) => {
+    setGlobalState((prevState) => ({
+      ...prevState,
+      homePageActiveWallpaper: wallpaper,
+    }));
+  };
+
+  const changeLoginWallpaper = (wallpaper: string) => {
+    setGlobalState((prevState) => ({
+      ...prevState,
+      loginPageActiveWallpaper: wallpaper,
     }));
   };
 
@@ -76,12 +115,26 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const state = useMemo(
+    () => ({
+      ...globalState,
+      toggleTheme,
+      openApp,
+      closeApp,
+      changeHomeWallpaper,
+      changeLoginWallpaper,
+    }),
+    [
+      toggleTheme,
+      openApp,
+      closeApp,
+      changeHomeWallpaper,
+      changeLoginWallpaper,
+    ]
+  );
+
   return (
-    <GlobalContext.Provider
-      value={{ ...globalState, toggleTheme, openApp, closeApp }}
-    >
-      {children}
-    </GlobalContext.Provider>
+    <GlobalContext.Provider value={state}>{children}</GlobalContext.Provider>
   );
 };
 
