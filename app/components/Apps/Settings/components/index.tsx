@@ -1,3 +1,5 @@
+import { CustomImage } from "@/app/components/System/Global";
+import { StaticImageData } from "next/image";
 import { memo } from "react";
 
 export const WallpaperItem = memo(
@@ -5,25 +7,31 @@ export const WallpaperItem = memo(
     wallpaper,
     index,
     callback,
+    isAppWindowResizing,
   }: {
-    wallpaper: string;
+    wallpaper: StaticImageData;
     index: number;
     callback: () => void;
+    isAppWindowResizing: boolean;
   }) => {
     return (
       <>
         {/* Wallpaper Image */}
-        <img
-          src={wallpaper}
-          alt={`wallpaper ${index + 1}`}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        {!isAppWindowResizing ? (
+          <CustomImage
+            src={wallpaper}
+            alt={`wallpaper ${index}`}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <div className="absolute bg-gray-400 w-full h-full" />
+        )}
         {/* Text with Black Blur Background */}
         <button
           className="absolute bottom-0 left-0 w-full bg-black bg-opacity-60 text-white text-center p-2 cursor-pointer"
           onClick={callback}
         >
-          Wallpaper {index + 1}
+          Wallpaper {index}
         </button>
       </>
     );

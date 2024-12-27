@@ -52,7 +52,10 @@ const HomeScreen: React.FC = () => {
               onClose={() => closeApp(appName)}
               title={appName}
             >
-              <AppComponent windowSize={{ width: 400, height: 300 }} />
+              <AppComponent
+                windowSize={{ width: 400, height: 300 }}
+                isAppWindowResizing={false}
+              />
             </AppWindow>
           );
         })}
