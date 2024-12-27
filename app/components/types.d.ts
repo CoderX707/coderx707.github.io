@@ -168,4 +168,5 @@ export interface GitData {
 
 export interface WindowSizeProps {
   windowSize: { width: number; height: number };
+  isAppWindowResizing: boolean;
 }
