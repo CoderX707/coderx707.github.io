@@ -88,11 +88,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const AppWindow: React.FC<AppWindowProps> = ({
-  isOpen,
-  onClose,
-  children,
-}) => {
+const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Handle Mouse Events for Dragging
@@ -223,6 +219,7 @@ const AppWindow: React.FC<AppWindowProps> = ({
         <div style={{ maxHeight: "calc(100% - 32px)", overflowY: "auto" }}>
           {React.cloneElement(children, {
             windowSize: state.windowSize,
+            isAppWindowResizing: state.resizeStart !== null,
           })}
         </div>
       )}
