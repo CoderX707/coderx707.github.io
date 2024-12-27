@@ -42,7 +42,7 @@ export default function Contact({ windowSize }: WindowSizeProps) {
   };
 
   // Get dynamic grid classes based on window size
-  const gridClasses = useGridClasses(windowSize, gridRules);
+  const { gridClasses } = useGridClasses(windowSize, gridRules);
   
   return (
     <div className="grid gap-2 p-3">
