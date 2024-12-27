@@ -20,7 +20,7 @@ const LoginScreen: React.FC = () => {
     <div
       className="h-screen w-screen backdrop-blur-sm bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center text-white"
       style={{
-        backgroundImage: `url(${context?.loginPageWallpaper})`,
+        backgroundImage: `url(${context?.loginPageActiveWallpaper})`,
       }}
     >
       <BackDrop />

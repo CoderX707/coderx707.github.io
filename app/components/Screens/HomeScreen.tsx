@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { AnimatePresence } from "framer-motion";
-import { TopBar, AppWindow, Dock } from "@/app/Components/System/Desktop";
+import { TopBar, AppWindow, Dock } from "@/app/components/System/Desktop";
 import {
   Calculator,
   Calender,
@@ -36,7 +36,7 @@ const HomeScreen: React.FC = () => {
     <div
       className="h-screen text-white relative bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url(${context?.homePageWallpaper})`,
+        backgroundImage: `url(${context?.homePageActiveWallpaper})`,
       }}
     >
       <TopBar />
