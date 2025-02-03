@@ -44,18 +44,22 @@ const HomeScreen: React.FC = () => {
       <AnimatePresence>
         {activeApps?.map((appName) => {
           const AppComponent = appComponents[appName];
+          const appProps = context.apps.find((app) => app.name === appName);
           if (!AppComponent) return null;
+          const appSize = {
+            ...(appProps?.defaultSize || {
+              width: 400,
+              height: 300,
+            }),
+          };
           return (
             <AppWindow
               key={appName}
-              isOpen={true}
+              defaultSize={appSize}
               onClose={() => closeApp(appName)}
               title={appName}
             >
-              <AppComponent
-                windowSize={{ width: 400, height: 300 }}
-                isAppWindowResizing={false}
-              />
+              <AppComponent windowSize={appSize} isAppWindowResizing={false} />
             </AppWindow>
           );
         })}

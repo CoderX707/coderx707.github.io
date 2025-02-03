@@ -27,6 +27,7 @@ interface GlobalContextType {
   apps: AppInterface[];
   toggleTheme: () => void;
   activeApps: string[];
+  currentActiveApp: AppInterface | null;
   openApp: (appName: string) => void;
   closeApp: (appName: string) => void;
   changeHomeWallpaper: (wallpaper: string) => void;
@@ -37,17 +38,59 @@ interface GlobalContextType {
 interface AppInterface {
   name: string;
   icon: StaticImageData;
+  defaultSize: { width: number; height: number };
+  isResizable: boolean;
 }
 
-const apps = [
-  { name: "Terminal", icon: TerminalIcon },
-  { name: "Calculator", icon: calculatorIcon },
-  { name: "Calender", icon: CalenderIcon },
-  { name: "Settings", icon: SettingsIcon },
-  { name: "Photos", icon: PhotosIcon },
-  { name: "Safari", icon: SafariIcon },
-  { name: "Contact", icon: ContactsIcon },
-  { name: "Music", icon: MusicIcon },
+const apps: AppInterface[] = [
+  {
+    name: "Terminal",
+    icon: TerminalIcon,
+    isResizable: true,
+    defaultSize: { width: 400, height: 300 },
+  },
+  {
+    name: "Calculator",
+    icon: calculatorIcon,
+    isResizable: true,
+    defaultSize: { width: 400, height: 300 },
+  },
+  {
+    name: "Calender",
+    icon: CalenderIcon,
+    isResizable: true,
+    defaultSize: { width: 400, height: 300 },
+  },
+  {
+    name: "Settings",
+    icon: SettingsIcon,
+    isResizable: true,
+    defaultSize: { width: 400, height: 300 },
+  },
+  {
+    name: "Photos",
+    icon: PhotosIcon,
+    isResizable: true,
+    defaultSize: { width: 400, height: 300 },
+  },
+  {
+    name: "Safari",
+    icon: SafariIcon,
+    isResizable: true,
+    defaultSize: { width: 200, height: 300 },
+  },
+  {
+    name: "Contact",
+    icon: ContactsIcon,
+    isResizable: true,
+    defaultSize: { width: 800, height: 500 },
+  },
+  {
+    name: "Music",
+    icon: MusicIcon,
+    isResizable: true,
+    defaultSize: { width: 400, height: 300 },
+  },
 ];
 
 // Create a Context with default values
@@ -58,6 +101,8 @@ const initialState: Omit<
   | "toggleTheme"
   | "openApp"
   | "closeApp"
+  | "maximizeApp"
+  | "minimizeApp"
   | "changeHomeWallpaper"
   | "changeLoginWallpaper"
 > = {
@@ -65,6 +110,7 @@ const initialState: Omit<
   loginPageActiveWallpaper: wallpaper1.src,
   theme: "light",
   apps: apps,
+  currentActiveApp: null,
   activeApps: [],
   availableWallpapers: [
     wallpaper0,
@@ -102,6 +148,7 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const openApp = (appName: string) => {
+    handleCurrentActiveApp(appName);
     setGlobalState((prevState) => ({
       ...prevState,
       activeApps: [...new Set([...prevState.activeApps, appName])],
@@ -115,23 +162,34 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const minimizeApp = (appName: string) => {
+    handleCurrentActiveApp(appName);
+    console.log({appName,"minimizeApp":"a"});
+  };
+
+  const maximizeApp = (appName: string) => {
+    handleCurrentActiveApp(appName);
+    console.log(appName,"maximizeApp");
+  };
+
   const state = useMemo(
     () => ({
       ...globalState,
       toggleTheme,
       openApp,
       closeApp,
+      minimizeApp,
+      maximizeApp,
       changeHomeWallpaper,
       changeLoginWallpaper,
     }),
-    [
-      toggleTheme,
-      openApp,
-      closeApp,
-      changeHomeWallpaper,
-      changeLoginWallpaper,
-    ]
+    [toggleTheme, openApp, closeApp, changeHomeWallpaper, changeLoginWallpaper]
   );
+
+  const handleCurrentActiveApp = (appName: string) => {
+    const activeApp = state.apps.filter((app) => app.name === appName);
+    setGlobalState((prev) => ({ ...prev, currentActiveApp: activeApp[0] }));
+  };
 
   return (
     <GlobalContext.Provider value={state}>{children}</GlobalContext.Provider>

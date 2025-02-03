@@ -3,10 +3,10 @@ import { BackDrop } from "../../Global";
 import { WindowSizeProps } from "@/app/components/types";
 
 interface AppWindowProps {
-  isOpen: boolean;
   onClose: () => void;
-  title: string;
+  // title: string;
   children: ReactElement<WindowSizeProps>;
+  defaultSize: { width: number; height: number };
 }
 
 interface State {
@@ -88,8 +88,8 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const AppWindow: React.FC<AppWindowProps> = ({ onClose, children, defaultSize }) => {
+  const [state, dispatch] = useReducer(reducer, {...initialState, windowSize:defaultSize});
 
   // Handle Mouse Events for Dragging
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -165,8 +165,6 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [state.isDragging, state.resizeStart]);
-
-  if (!isOpen) return null;
 
   return (
     <div
