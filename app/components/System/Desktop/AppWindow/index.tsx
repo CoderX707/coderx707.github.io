@@ -3,10 +3,11 @@ import { BackDrop } from "../../Global";
 import { WindowSizeProps } from "@/app/components/types";
 
 interface AppWindowProps {
-  isOpen: boolean;
   onClose: () => void;
-  title: string;
+  // title: string;
   children: ReactElement<WindowSizeProps>;
+  defaultSize: { width: number; height: number };
+  isResizable: boolean;
 }
 
 interface State {
@@ -18,6 +19,11 @@ interface State {
   windowSize: { width: number; height: number };
   resizeStart: { x: number; y: number } | null;
   initialSize: { width: number; height: number };
+  defaultSize: { width: number; height: number };
+  preMaximizeState: {
+    position: { x: number; y: number };
+    windowSize: { width: number; height: number };
+  } | null;
 }
 
 type Action =
@@ -27,7 +33,7 @@ type Action =
   | { type: "START_RESIZE"; payload: { x: number; y: number } }
   | { type: "RESIZE"; payload: { width: number; height: number } }
   | { type: "STOP_RESIZE" }
-  | { type: "TOGGLE_MINIMIZE" }
+  | { type: "TOGGLE_MINIMIZE"; payload: { width: number; height: number } }
   | { type: "TOGGLE_MAXIMIZE"; payload?: { width: number; height: number } };
 
 const initialState: State = {
@@ -39,6 +45,8 @@ const initialState: State = {
   windowSize: { width: 400, height: 300 },
   resizeStart: null,
   initialSize: { width: 400, height: 300 },
+  defaultSize: { width: 400, height: 300 },
+  preMaximizeState: null
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -64,8 +72,8 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         isMinimized: !state.isMinimized,
         windowSize: {
-          ...state.windowSize,
-          height: state.isMinimized ? 300 : 33,
+          width: action.payload.width,
+          height: state.isMinimized ? action.payload.height : 33,
         },
       };
     case "TOGGLE_MAXIMIZE":
@@ -73,14 +81,22 @@ const reducer = (state: State, action: Action): State => {
         return {
           ...state,
           isMaximized: false,
-          windowSize: { width: 400, height: 300 },
-          position: { x: 100, y: 100 },
+          windowSize: state.preMaximizeState?.windowSize || state.defaultSize,
+          position: state.preMaximizeState?.position || { x: 100, y: 100 },
+          preMaximizeState: null
         };
       }
       return {
         ...state,
         isMaximized: true,
-        windowSize: action.payload || state.windowSize,
+        preMaximizeState: {
+          position: state.position,
+          windowSize: state.windowSize
+        },
+        windowSize: action.payload || {
+          width: window.innerWidth,
+          height: window.innerHeight
+        },
         position: { x: 0, y: 0 },
       };
     default:
@@ -88,8 +104,17 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const AppWindow: React.FC<AppWindowProps> = ({
+  onClose,
+  children,
+  defaultSize,
+  isResizable,
+}) => {
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    windowSize: defaultSize,
+    defaultSize: defaultSize
+  });
 
   // Handle Mouse Events for Dragging
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -120,7 +145,7 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
       dispatch({ type: "DRAG", payload: { x: boundedX, y: boundedY } });
     }
 
-    if (state.resizeStart) {
+    if (state.resizeStart && isResizable) {
       const newWidth =
         state.initialSize.width + (e.clientX - state.resizeStart.x);
       const newHeight =
@@ -130,11 +155,11 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
         type: "RESIZE",
         payload: {
           width: Math.max(
-            200,
+            state.defaultSize.width,
             Math.min(newWidth, window.innerWidth - state.position.x)
           ),
           height: Math.max(
-            100,
+            state.defaultSize.height,
             Math.min(newHeight, window.innerHeight - state.position.y)
           ),
         },
@@ -150,6 +175,7 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
   const handleResizeStart = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    if (!isResizable) return;
     e.stopPropagation();
     dispatch({ type: "START_RESIZE", payload: { x: e.clientX, y: e.clientY } });
   };
@@ -165,8 +191,6 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [state.isDragging, state.resizeStart]);
-
-  if (!isOpen) return null;
 
   return (
     <div
@@ -195,22 +219,24 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
           />
           <button
             className="bg-yellow-400 rounded-full w-4 h-4"
-            onClick={() => dispatch({ type: "TOGGLE_MINIMIZE" })}
+            onClick={() => dispatch({ type: "TOGGLE_MINIMIZE", payload: defaultSize })}
             title="Minimize"
           />
-          <button
-            className="bg-green-500 rounded-full w-4 h-4"
-            onClick={() =>
-              dispatch({
-                type: "TOGGLE_MAXIMIZE",
-                payload: {
-                  width: window.innerWidth,
-                  height: window.innerHeight,
-                },
-              })
-            }
-            title={state.isMaximized ? "Restore" : "Maximize"}
-          />
+          {isResizable && (
+            <button
+              className="bg-green-500 rounded-full w-4 h-4"
+              onClick={() =>
+                dispatch({
+                  type: "TOGGLE_MAXIMIZE",
+                  payload: {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                  },
+                })
+              }
+              title={state.isMaximized ? "Restore" : "Maximize"}
+            />
+          )}
         </div>
       </div>
 
@@ -225,10 +251,12 @@ const AppWindow: React.FC<AppWindowProps> = ({ isOpen, onClose, children }) => {
       )}
 
       {/* Resize Handle */}
-      <div
-        className="absolute bottom-0 right-0 w-5 h-5 cursor-se-resize"
-        onMouseDown={handleResizeStart}
-      />
+      {isResizable && !state.isMaximized && (
+        <div
+          className="absolute bottom-0 right-0 w-5 h-5 cursor-se-resize"
+          onMouseDown={handleResizeStart}
+        />
+      )}
     </div>
   );
 };

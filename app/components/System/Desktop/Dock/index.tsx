@@ -11,7 +11,7 @@ const Dock: React.FC = () => {
       {context?.apps?.map((app) => (
         <button
           key={app.name}
-          onClick={() => context.openApp(app.name)}
+          onClick={() => context.openApp(app)}
           className="w-12 h-12 flex items-center justify-center rounded-md hover:bg-gray-700"
         >
           <Image src={app.icon} alt={`${app.name} icon`} className="w-12 h-12" />
