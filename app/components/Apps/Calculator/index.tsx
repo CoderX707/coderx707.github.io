@@ -1,7 +1,6 @@
-import { WindowSizeProps } from "../../types";
 import { useState } from "react";
 
-const Calculator = ({ windowSize }: WindowSizeProps) => {
+const Calculator = () => {
   const [display, setDisplay] = useState("0");
   const [firstOperand, setFirstOperand] = useState<number | null>(null);
   const [operator, setOperator] = useState<string | null>(null);
