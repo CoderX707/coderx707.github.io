@@ -42,24 +42,20 @@ const HomeScreen: React.FC = () => {
       <TopBar />
       {/* Open Apps */}
       <AnimatePresence>
-        {activeApps?.map((appName) => {
-          const AppComponent = appComponents[appName];
-          const appProps = context.apps.find((app) => app.name === appName);
+        {activeApps?.map((app) => {
+          const AppComponent = appComponents[app.name];
           if (!AppComponent) return null;
-          const appSize = {
-            ...(appProps?.defaultSize || {
-              width: 400,
-              height: 300,
-            }),
-          };
           return (
             <AppWindow
-              key={appName}
-              defaultSize={appSize}
-              onClose={() => closeApp(appName)}
-              title={appName}
+              key={app.name}
+              defaultSize={app.defaultSize}
+              onClose={() => closeApp(app)}
+              isResizable={app.isResizable}
             >
-              <AppComponent windowSize={appSize} isAppWindowResizing={false} />
+              <AppComponent
+                windowSize={app.defaultSize}
+                isAppWindowResizing={app.isResizable}
+              />
             </AppWindow>
           );
         })}

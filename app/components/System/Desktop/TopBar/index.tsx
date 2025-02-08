@@ -88,11 +88,11 @@ const TopBar: React.FC = () => {
         <div className="flex items-center">
           {context?.activeApps?.map((app) => (
             <span
-              key={app}
+              key={app.name}
               className="mx-2 cursor-pointer"
               onDoubleClick={() => context?.closeApp(app)}
             >
-              {app}
+              {app.name}
             </span>
           ))}
         </div>

@@ -26,10 +26,10 @@ interface GlobalContextType {
   theme: string;
   apps: AppInterface[];
   toggleTheme: () => void;
-  activeApps: string[];
+  activeApps: AppInterface[];
   currentActiveApp: AppInterface | null;
-  openApp: (appName: string) => void;
-  closeApp: (appName: string) => void;
+  openApp: (app: AppInterface) => void;
+  closeApp: (app: AppInterface) => void;
   changeHomeWallpaper: (wallpaper: string) => void;
   changeLoginWallpaper: (wallpaper: string) => void;
   availableWallpapers: StaticImageData[];
@@ -52,8 +52,8 @@ const apps: AppInterface[] = [
   {
     name: "Calculator",
     icon: calculatorIcon,
-    isResizable: true,
-    defaultSize: { width: 400, height: 300 },
+    isResizable: false,
+    defaultSize: { width: 400, height: 380 },
   },
   {
     name: "Calender",
@@ -147,29 +147,29 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
-  const openApp = (appName: string) => {
-    handleCurrentActiveApp(appName);
+  const openApp = (app: AppInterface) => {
+    handleCurrentActiveApp(app.name);
+    setGlobalState((prevState) => {
+      const isAppAlreadyOpen = prevState.activeApps.some(a => a.name === app.name);
+      if (isAppAlreadyOpen) return prevState;
+      return {
+        ...prevState,
+        activeApps: [...prevState.activeApps, app]
+      };
+    });
+  };
+
+  const closeApp = (app: AppInterface) => {
     setGlobalState((prevState) => ({
       ...prevState,
-      activeApps: [...new Set([...prevState.activeApps, appName])],
+      activeApps: prevState.activeApps.filter((a) => a.name !== app.name),
+      currentActiveApp: null,
     }));
   };
 
-  const closeApp = (appName: string) => {
-    setGlobalState((prevState) => ({
-      ...prevState,
-      activeApps: prevState.activeApps.filter((app) => app !== appName),
-    }));
-  };
-
-  const minimizeApp = (appName: string) => {
-    handleCurrentActiveApp(appName);
-    console.log({appName,"minimizeApp":"a"});
-  };
-
-  const maximizeApp = (appName: string) => {
-    handleCurrentActiveApp(appName);
-    console.log(appName,"maximizeApp");
+  const handleCurrentActiveApp = (appName: string) => {
+    const activeApp = globalState.apps.find((app) => app.name === appName) || null;
+    setGlobalState((prev) => ({ ...prev, currentActiveApp: activeApp }));
   };
 
   const state = useMemo(
@@ -178,18 +178,11 @@ const GlobalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       toggleTheme,
       openApp,
       closeApp,
-      minimizeApp,
-      maximizeApp,
       changeHomeWallpaper,
       changeLoginWallpaper,
     }),
-    [toggleTheme, openApp, closeApp, changeHomeWallpaper, changeLoginWallpaper]
+    [globalState]
   );
-
-  const handleCurrentActiveApp = (appName: string) => {
-    const activeApp = state.apps.filter((app) => app.name === appName);
-    setGlobalState((prev) => ({ ...prev, currentActiveApp: activeApp[0] }));
-  };
 
   return (
     <GlobalContext.Provider value={state}>{children}</GlobalContext.Provider>
