@@ -71,7 +71,7 @@ const apps: AppInterface[] = [
     name: "Photos",
     icon: PhotosIcon,
     isResizable: true,
-    defaultSize: { width: 400, height: 300 },
+    defaultSize: { width: 480, height: 300 },
   },
   {
     name: "Safari",
