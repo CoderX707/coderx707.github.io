@@ -73,7 +73,7 @@ export default function Contact({ windowSize }: WindowSizeProps) {
       <div className={gridClasses.repos}>
         <div className="grid gap-2">
           {state.repos.map((repo, index) => (
-            <div key={index} className={gridClasses.repoItem}>
+            <div key={index+1} className={gridClasses.repoItem}>
               <div className="p-4 bg-gray-700 rounded-lg shadow hover:shadow-lg transition">
                 <h4 className="font-medium text-sm sm:text-lg">{repo.name}</h4>
                 <p className="text-gray-400 text-xs sm:text-sm">{repo?.description || "NA"}</p>
