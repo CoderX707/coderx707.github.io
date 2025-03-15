@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { BackDrop } from "../../Global";
-import AppleLogo50 from "@/public/icons/apple50.png";
-import Image from "next/image";
 import { GlobalContext } from "@/app/contexts/GlobalContext";
-import BatteryIcon from "@/public/icons/battery.png";
-import BatteryChargeIcon from "@/public/icons/battery-charge.png";
 import WifiIcon from "@/public/icons/wifi.png";
-import FullScreenIcon from "@/public/icons/full-screen.png";
 import screenfull from "screenfull";
+import { VscTerminalLinux } from "react-icons/vsc";
+import { FaWifi } from "react-icons/fa";
+import { RiFullscreenLine } from "react-icons/ri";
+import { BsBatteryHalf } from "react-icons/bs";
+import { BsBatteryFull } from "react-icons/bs";
+import { BsBatteryCharging } from "react-icons/bs";
+import { BsBattery } from "react-icons/bs";
 
 const TopBar: React.FC = () => {
   const context = useContext(GlobalContext);
@@ -81,10 +83,10 @@ const TopBar: React.FC = () => {
   };
 
   return (
-    <div className="w-full backdrop-blur-md text-black font-bold py-1 px-4 flex justify-between items-center fixed top-0 z-10">
+    <div className="w-full backdrop-blur-md text-black font-bold py-1 px-2 flex justify-between items-center fixed top-0 z-10">
       <BackDrop />
       <div className="flex items-center text-sm gap-x-2">
-        <Image src={AppleLogo50} alt="Apple Logo" className="h-5 w-5" />
+        <VscTerminalLinux size={24} />
         <div className="flex items-center">
           {context?.activeApps?.map((app) => (
             <span
@@ -100,32 +102,29 @@ const TopBar: React.FC = () => {
       <div className="flex items-center gap-x-2">
         {batteryPercentage !== null && (
           <div className="flex items-center text-sm mx-2">
-            {isCharging ? (
-              <div className="mr-2">
-                <Image
-                  src={BatteryChargeIcon}
-                  className="w-8 h-6"
-                  alt="battery-charge"
-                />
-              </div>
-            ) : (
-              <div className="mr-2">
-                <Image src={BatteryIcon} alt="battery" className="w-8 h-6" />
-              </div>
-            )}
+            <div className="mr-2">
+              {isCharging ? (
+                <BsBatteryCharging size={22} />
+              ) : batteryPercentage <= 30 ? (
+                <BsBattery size={22} />
+              ) : batteryPercentage > 30 && batteryPercentage < 70 ? (
+                <BsBatteryHalf size={22} />
+              ) : (
+                <BsBatteryFull size={22} />
+              )}
+            </div>
             <span className="text-sm cursor-default">{batteryPercentage}%</span>
           </div>
         )}
 
         {isOnline && (
           <div className="mr-2">
-            <Image src={WifiIcon} alt="Wifi" className="w-5 h-5" />
+            <FaWifi size={22} />
           </div>
         )}
         <div className="mr-1">
-          <Image
-            src={FullScreenIcon}
-            alt="Wifi"
+          <RiFullscreenLine
+            size={22}
             onClick={toggleFullscreen}
             className="w-5 h-5 cursor-pointer"
           />

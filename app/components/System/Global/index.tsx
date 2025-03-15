@@ -1,6 +1,7 @@
 import Image from "next/image";
 import WorkingIcon from "@/public/icons/working.png";
-import { memo, useState } from "react";
+import { FC, memo, useState } from "react";
+import { IconType } from "react-icons/lib";
 interface BackDropInterface {
   color?: "black" | "white";
   blur?: "sm" | "md" | "xl";
@@ -73,3 +74,28 @@ export const CustomImage = memo(
   }
 );
 CustomImage.displayName = "CustomImage";
+
+interface AnimatedIconProps {
+  icon: IconType; // IconType from react-icons
+  size?: number;
+  className?: string;
+  iconColor?: string;
+  bgHoverColor?: string;
+}
+
+export const AnimatedIcon: FC<AnimatedIconProps> = ({
+  icon: IconComponent,
+  size = 24,
+  className = "",
+  iconColor = "while",
+  bgHoverColor = "bg-black",
+}) => {
+  return (
+    <div
+      className={`flex items-center justify-center p-2 transition-transform cursor-pointer transform rounded-md hover:${bgHoverColor} hover:scale-110 ${className}`}
+      style={{ width: size * 1.5, height: size * 1.5 }}
+    >
+      <IconComponent size={size} color={iconColor} />
+    </div>
+  );
+};
