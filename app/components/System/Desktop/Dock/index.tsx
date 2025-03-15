@@ -1,20 +1,20 @@
 import { useContext } from "react";
-import { BackDrop } from "../../Global";
+import { AnimatedIcon, BackDrop } from "../../Global";
 import { GlobalContext } from "@/app/contexts/GlobalContext";
-import Image from "next/image";
 
 const Dock: React.FC = () => {
   const context = useContext(GlobalContext);
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 backdrop-blur-sm rounded-xl shadow-lg p-4 flex space-x-4 z-10">
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 backdrop-blur-sm rounded-xl shadow-lg p-4 flex z-10">
       <BackDrop radius="rounded-xl" />
       {context?.apps?.map((app) => (
-        <button
-          key={app.name}
-          onClick={() => context.openApp(app)}
-          className="w-12 h-12 flex items-center justify-center rounded-md hover:bg-gray-700"
-        >
-          <Image src={app.icon} alt={`${app.name} icon`} className="w-12 h-12" />
+        <button key={app.name} onClick={() => context.openApp(app)} className="mx-1">
+          <AnimatedIcon
+            icon={app.icon}
+            size={32}
+            iconColor="white"
+            bgHoverColor="bg-gray-700"
+          />
         </button>
       ))}
     </div>
